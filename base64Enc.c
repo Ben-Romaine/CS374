@@ -26,5 +26,9 @@ int main(int argc, char *argv[])
       }
     else {
         inputFile = stdin;
-      }
+    }
+    for (i=0; 0 < i < 57; i++){
+      uint8_t input_bytes[3] = {0};
+      size_t n_read = fread(input_bytes, 1, 3, inputFile);
+    }
    }
