@@ -54,21 +54,22 @@ static char const b64_alphabet[] =
       output[3] = b64_alphabet[alph_ind[3]];
 
       size_t n_write = fwrite(output, 1, 4, stdout);
-
+      
+      if(sizeof(n_write) == 76){
+      fprintf(stdout, "\n");}
       
        
       if (ferror(inputFile)) err(1, "%s", input_bytes);
   }
-      int num_requested = 3;
-      if (n_read < num_requested) {
-    
-    if (sizeof(stdout) == 76){
-    fprintf(stdout, "\n");
-    }
+     int num_requested = 3;
+     if (n_read < num_requested) {
 
     if (feof(inputFile)) break;
     if (ferror(inputFile)) err(1, "%s", input_bytes);
       }
+     if (sizeof(stdout) == 76){
+     fprintf(stdout, "\n");
+     }
 }
 if (inputFile != stdin) fclose(inputFile);
 }
