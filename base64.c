@@ -48,9 +48,6 @@ static char const b64_alphabet[] =
 
       size_t n_write = fwrite(output, 1, 4, stdout);
       
-      if(sizeof(n_write) == 76){
-      fprintf(stdout, "\n");}
-      
        
       if (ferror(inputFile)) err(1, "%s", input_bytes);
   }
