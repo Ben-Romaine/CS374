@@ -22,7 +22,7 @@ static char const b64_alphabet[] =
       errx(1, "Too many arguments");
   } else if (argc == 2 && strcmp(argv[1], "-")) {
     
-    inputFile = fopen(argv[1], "r");
+    inputFile = fopen(argv[0], "r");
   
   } else {
     
