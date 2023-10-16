@@ -15,6 +15,7 @@ static char const b64_alphabet[] =
 
   FILE *inputFile;
   int counter;
+  char new_line = '\n';
 
   if (argc > 2) {
       
@@ -52,14 +53,16 @@ static char const b64_alphabet[] =
       output[3] = b64_alphabet[alph_ind[3]];
 
       size_t n_write = fwrite(output, 1, 4, stdout);
+      fprintf(stderr, "%lu", n_write);
        
       if (ferror(inputFile)) err(1, "%s", output);
   }
       int num_requested = 3;
       if (n_read < num_requested) {
-      
+    
     if (counter == 76){
     counter = 0;}
+    putchar(new_line);
     if (feof(inputFile)) break;
     if (ferror(inputFile)) err(1, "%s", input_bytes);
 
