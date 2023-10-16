@@ -43,7 +43,7 @@ static char const b64_alphabet[] =
       int alph_ind[64];
       alph_ind[0] = input_bytes[0] >> 2;
       alph_ind[1] = (input_bytes[0] << 4 | input_bytes[1] >> 4) & 0x3Fu;
-      alph_ind[2] = (input_bytes[1] << 4 | input_bytes[2] >> 4) & 0x3Fu;
+      alph_ind[2] = input_bytes[1] >> 2 & 0x3Fu;
       alph_ind[3] = input_bytes[2] << 2 & 0x3Fu;
 
       char output[4];
@@ -59,9 +59,10 @@ static char const b64_alphabet[] =
       int num_requested = 3;
       if (n_read < num_requested) {
     
+     putchar(new_line);
     if (counter == 76){
     counter = 0;}
-    putchar(new_line);
+
     if (feof(inputFile)) break;
     if (ferror(inputFile)) err(1, "%s", input_bytes);
 
