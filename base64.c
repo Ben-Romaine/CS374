@@ -53,7 +53,6 @@ static char const b64_alphabet[] =
       output[3] = b64_alphabet[alph_ind[3]];
 
       size_t n_write = fwrite(output, 1, 4, stdout);
-      fprintf(stderr, "%lu", n_write);
        
       if (ferror(inputFile)) err(1, "%s", output);
   }
