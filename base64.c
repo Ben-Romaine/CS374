@@ -33,7 +33,6 @@ static char const b64_alphabet[] =
   for (counter = 0; counter <= 76; counter++) {
       uint8_t input_bytes[3] = {0};
       size_t n_read = fread(input_bytes, 1, 3, inputFile);
-
       if (n_read != 0) {
       int alph_ind[64];
       alph_ind[0] = input_bytes[0] >> 2;
@@ -53,7 +52,6 @@ static char const b64_alphabet[] =
   }
       int num_requested = 3;
       if (n_read < num_requested) {
-      }
     
      putchar(new_line);
     if (counter == 76){
@@ -61,6 +59,7 @@ static char const b64_alphabet[] =
 
     if (feof(inputFile)) break;
     if (ferror(inputFile)) err(1, "%s", input_bytes);
+      }
 }
 if (inputFile != stdin) fclose(inputFile);
 }
