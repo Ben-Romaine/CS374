@@ -59,6 +59,6 @@ static char const b64_alphabet[] =
     if (ferror(inputFile)) err(1, "%s", input_bytes);
 
       }
-  fclose(inputFile);
 }
+if (inputFile != stdin) fclose(inputFile);
 }
