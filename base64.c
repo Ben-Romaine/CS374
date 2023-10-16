@@ -49,6 +49,7 @@ static char const b64_alphabet[] =
       size_t n_write = fwrite(output, 1, 4, stdout);
        
       if (ferror(inputFile)) err(1, "%s", input_bytes);
+      fprintf(stderr, "%lu", n_write);
   }
       int num_requested = 3;
       if (n_read < num_requested) {
