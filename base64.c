@@ -32,7 +32,7 @@ static char const b64_alphabet[] =
     }
   for (i = 1; i < 3; i++) {
       uint8_t input_bytes[3] = {0};
-      size_t n_read = fread(input_bytes, 1, 3, &inputFile);
+      size_t n_read = fread(input_bytes, 1, 3, inputFile);
       if (n_read != 0) {
       int alph_ind[sizeof(inputFile)];
       alph_ind[0] = input_bytes[0] >> 2;
