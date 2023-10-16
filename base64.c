@@ -27,7 +27,7 @@ static char const b64_alphabet[] =
   
   } else {
     
-    inputFile = stdin;
+    FILE *inputFile = stdin;
 
     }
   for (i = 1; i < 3; i++) {
