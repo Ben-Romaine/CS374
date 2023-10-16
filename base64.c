@@ -62,9 +62,8 @@ static char const b64_alphabet[] =
       int num_requested = 3;
       if (n_read < num_requested) {
     
-     char line = '\n';
     if (sizeof(stdout) == 76){
-    putchar(line);
+    fprintf(stdout, "\n");
     }
 
     if (feof(inputFile)) break;
