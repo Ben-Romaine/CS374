@@ -46,8 +46,8 @@ static char const b64_alphabet[] =
       output[2] = b64_alphabet[alph_ind[2]];
       output[3] = b64_alphabet[alph_ind[3]];
 
-      size_t n_write = fwrite(output, 1, 4, stdout);
-      if (ferror(n_write)) err(1, "%s", stdout);
+      size_t n_write = fwrite(output, 1, sizeof(output), stdout);
+      if (ferror(inputFile)) err(1, "%s", input_bytes);
   }
       int num_requested = 4;
       if (n_read < num_requested) {
@@ -56,7 +56,7 @@ static char const b64_alphabet[] =
         }
 
     if (feof(inputFile)) break;
-    if (ferror(inputFile)) err(1, "%s", inputFile);
+    if (ferror(inputFile)) err(1, "%s", input_bytes);
 
     fclose(inputFile);
       }        
