@@ -14,7 +14,7 @@ static char const b64_alphabet[] =
 {
 
   FILE *inputFile;
-  
+  char new_line = '\n';
 
   if (argc > 2) {
       
@@ -53,7 +53,8 @@ static char const b64_alphabet[] =
   }
      int num_requested = 3;
      if (n_read < num_requested) {
-
+    
+    putchar(new_line);
     if (feof(inputFile)) break;
     if (ferror(inputFile)) err(1, "%s", input_bytes);
       }
