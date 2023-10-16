@@ -13,7 +13,7 @@ static char const b64_alphabet[] =
  int main(int argc, char *argv[])
 {
 
-  FILE *inputFile;
+  FILE* inputFile;
   int i;
   int x;
 
@@ -37,8 +37,8 @@ static char const b64_alphabet[] =
       int alph_ind[sizeof(inputFile)];
       alph_ind[0] = input_bytes[0] >> 2;
       alph_ind[1] = (input_bytes[0] << 4 | input_bytes[1] >> 4) & 0x3Fu;
-      alph_ind[2] = input_bytes[2] >> 2 & 0x3Fu;
-      alph_ind[3] = input_bytes[3] << 2 & 0x3Fu;
+      alph_ind[2] = input_bytes[1] >> 2 & 0x3Fu;
+      alph_ind[3] = input_bytes[2] << 2 & 0x3Fu;
 
       char output[4];
       output[0] = b64_alphabet[alph_ind[0]];
