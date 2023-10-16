@@ -54,10 +54,11 @@ static char const b64_alphabet[] =
 
       size_t n_write = fwrite(output, 1, 4, stdout);
        
-      if (ferror(inputFile)) err(1, "%s", output);
+      if (ferror(inputFile)) err(1, "%s", input_bytes);
   }
       int num_requested = 3;
       if (n_read < num_requested) {
+      }
     
      putchar(new_line);
     if (counter == 76){
@@ -65,8 +66,6 @@ static char const b64_alphabet[] =
 
     if (feof(inputFile)) break;
     if (ferror(inputFile)) err(1, "%s", input_bytes);
-
-      }
 }
 if (inputFile != stdin) fclose(inputFile);
 }
