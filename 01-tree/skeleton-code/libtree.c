@@ -142,7 +142,7 @@ exit:;
 
      closedir(dirp);
      free(dirp);
-     free_file_list(&file_list, file_count);
+     free_file_list(&file_list, sizeof(file_count));
 
   cur_dir = sav_dir;
   return errno ? -1 : 0;
