@@ -91,12 +91,13 @@ tree_print_recurse(struct fileinfo finfo)
 
   /* TODO: implement dirsonly functionality*/
   
-  if ((opts.dirsonly == true) && (S_ISDIR(finfo.st.st_mode) == 0)){
+  if (opts.dirsonly == true && S_ISDIR(finfo.st.st_mode) == 0){
     goto exit;
   }
-  putchar('\n');
+     
   /* TODO: print indentation */
     for (int i = 0; i < opts.indent * depth; ++i) putchar(' ');
+    
 
   /* TODO: print the path info */
     print_path_info(finfo);
@@ -122,7 +123,7 @@ tree_print_recurse(struct fileinfo finfo)
     }
     goto exit;
   }
-
+  
   if (putchar('\n') == EOF) goto exit;
 
   /* See QSORT(3) for info about this function. It's not super important. It just sorts the list of
@@ -140,10 +141,11 @@ exit:;
    * Hint: look for realloc, malloc, and calloc calls for memory allocation
    *       look for open*() function calls for file related allocations
    */
-     
+
      free_file_list(&file_list, file_count);
   } 
   cur_dir = sav_dir;
+  putchar('\n');
   return errno ? -1 : 0;
 }
 
