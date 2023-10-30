@@ -91,8 +91,9 @@ tree_print_recurse(struct fileinfo finfo)
 
   /* TODO: implement dirsonly functionality*/
   
-  if ((opts.dirsonly == true) && (S_ISDIR(finfo.st.st_mode) == 0)) goto exit;
-
+  if ((opts.dirsonly == true) && (S_ISDIR(finfo.st.st_mode) == 0)){
+    if (putchar('\n') == EOF) goto exit;
+  }
   /* TODO: print indentation */
     for (int i = 0; i < opts.indent * depth; ++i) putchar(' ');
 
@@ -100,7 +101,7 @@ tree_print_recurse(struct fileinfo finfo)
     print_path_info(finfo);
 
   /* TODO: continue ONLY if path is a directory */
-  if ((opts.dirsonly == true) && (S_ISDIR(finfo.st.st_mode) != 0)){
+  if (S_ISDIR(finfo.st.st_mode) != 0){
 
   if ((dir = openat(cur_dir, finfo.path, O_RDONLY | O_CLOEXEC)) == -1 ||
       (dirp = fdopendir(dir)) == NULL) {
