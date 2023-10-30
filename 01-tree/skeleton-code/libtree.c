@@ -91,19 +91,17 @@ tree_print_recurse(struct fileinfo finfo)
 
   /* TODO: implement dirsonly functionality*/
   
-  if (opts.dirsonly == true) {
+  if ((opts.dirsonly == true) && (S_ISDIR(finfo.st.st_mode) == 0)) goto exit;
 
   /* TODO: print indentation */
-    printf("%d", opts.indent);
+    printf("%c", opts.indent);
 
   /* TODO: print the path info */
-    print_path_info(*file_list);
+    print_path_info(finfo);
 
-  }
   /* TODO: continue ONLY if path is a directory */
-     if (S_ISDIR(finfo.st.st_mode) != 0) {
+  if (opts.dirsonly == true && S_ISDIR(finfo.st.st_mode) != 0){
 
-    
   if ((dir = openat(cur_dir, finfo.path, O_RDONLY | O_CLOEXEC)) == -1 ||
       (dirp = fdopendir(dir)) == NULL) {
     if (errno == EACCES) {
@@ -112,8 +110,8 @@ tree_print_recurse(struct fileinfo finfo)
     }
     goto exit;
   }
+  
   cur_dir = dir;
-  }
 
   if (read_file_list(dirp, &file_list, &file_count) == -1) {
     if (errno == EACCES) {
@@ -135,15 +133,15 @@ tree_print_recurse(struct fileinfo finfo)
   }
   --depth;
 exit:;
+
   /* TODO: Free any allocated resources.
    * Hint: look for realloc, malloc, and calloc calls for memory allocation
    *       look for open*() function calls for file related allocations
    */
-
      closedir(dirp);
      free(dirp);
-     free_file_list(&file_list, sizeof(file_count));
-
+     free_file_list(&file_list, file_count);
+  }
   cur_dir = sav_dir;
   return errno ? -1 : 0;
 }
@@ -233,6 +231,7 @@ read_file_list(DIR *dirp, struct fileinfo **file_list, size_t *file_count)
     if (strcoll(de->d_name, ".") == 0 || strcoll(de->d_name, "..") == 0) continue;
 
     /* TODO: Skip hidden files? */
+    if (opts.all != true && de->d_name[0] == '.') continue; 
 
     ++(*file_count);
     (*file_list) = realloc((*file_list), sizeof *(*file_list) * (*file_count));
@@ -291,3 +290,4 @@ mode_string(mode_t mode)
   str[10] = '\0';
   return str;
 }
+
