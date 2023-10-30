@@ -94,7 +94,7 @@ tree_print_recurse(struct fileinfo finfo)
   if ((opts.dirsonly == true) && (S_ISDIR(finfo.st.st_mode) == 0)) goto exit;
 
   /* TODO: print indentation */
-    printf("%c", opts.indent);
+    for (int i = 0; i < opts.indent * depth; ++i) putchar(' ');
 
   /* TODO: print the path info */
     print_path_info(finfo);
