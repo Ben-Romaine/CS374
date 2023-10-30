@@ -92,8 +92,9 @@ tree_print_recurse(struct fileinfo finfo)
   /* TODO: implement dirsonly functionality*/
   
   if ((opts.dirsonly == true) && (S_ISDIR(finfo.st.st_mode) == 0)){
-    if (putchar('\n') == EOF) goto exit;
+    goto exit;
   }
+  putchar('\n');
   /* TODO: print indentation */
     for (int i = 0; i < opts.indent * depth; ++i) putchar(' ');
 
