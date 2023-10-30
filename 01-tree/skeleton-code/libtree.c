@@ -100,7 +100,7 @@ tree_print_recurse(struct fileinfo finfo)
     print_path_info(finfo);
 
   /* TODO: continue ONLY if path is a directory */
-  if (opts.dirsonly == true && S_ISDIR(finfo.st.st_mode) != 0){
+  if ((opts.dirsonly == true) && (S_ISDIR(finfo.st.st_mode) != 0)){
 
   if ((dir = openat(cur_dir, finfo.path, O_RDONLY | O_CLOEXEC)) == -1 ||
       (dirp = fdopendir(dir)) == NULL) {
@@ -138,10 +138,9 @@ exit:;
    * Hint: look for realloc, malloc, and calloc calls for memory allocation
    *       look for open*() function calls for file related allocations
    */
-     closedir(dirp);
-     free(dirp);
+     
      free_file_list(&file_list, file_count);
-  }
+  } 
   cur_dir = sav_dir;
   return errno ? -1 : 0;
 }
@@ -231,7 +230,7 @@ read_file_list(DIR *dirp, struct fileinfo **file_list, size_t *file_count)
     if (strcoll(de->d_name, ".") == 0 || strcoll(de->d_name, "..") == 0) continue;
 
     /* TODO: Skip hidden files? */
-    if (opts.all != true && de->d_name[0] == '.') continue; 
+    if ((opts.all != true) && (de->d_name[0] == '.')) continue; 
 
     ++(*file_count);
     (*file_list) = realloc((*file_list), sizeof *(*file_list) * (*file_count));
