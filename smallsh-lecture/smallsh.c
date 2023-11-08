@@ -93,35 +93,29 @@ size_t wordsplit(char const *line) {
  * token.
  */
 char
-param_scan(char const *word, char **start, char const **end)
+param_scan(char const *word, char **start, char **end)
 {
-  static char const *prev;
+  static char *prev;
   if (!word) word = prev;
   
   char ret = 0;
-  *start = 0;
-  *end = 0;
-
-  for (char const *s = word; *s && !ret; ++s) {
-    s = strchr(s, '$');
-    if (!s) break;
-    switch (s[1]) {
-      case '$':
-      case '!':
-      case '?':
-        ret = s[1];
-        *start = s;
-        *end = s + 2;
-        break;
-
-    case '{':;
+  *start = NULL;
+  *end = NULL;
+  char *s = strchr(word, '$');
+  if (s) {
+    char *c = strchr("$!?", s[1]);
+    if (c) {
+      ret = *c;
+      *start = s;
+      *end = s + 2;
+    }
+    else if (s[1] == '{') {
       char *e = strchr(s + 2, '}');
       if (e) {
-        ret = s[1];
+        ret = '{';
         *start = s;
         *end = e + 1;
       }
-      break;
     }
   }
   prev = *end;
