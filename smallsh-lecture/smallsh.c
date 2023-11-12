@@ -7,6 +7,8 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <string.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 
 #ifndef MAX_WORDS
 #define MAX_WORDS 512
@@ -30,6 +32,8 @@ int main(int argc, char *argv[])
 
   char *line = NULL;
   size_t n = 0;
+  int childStatus;
+
   for (;;) {
 prompt:;
     /* TODO: Manage background processes */
@@ -39,8 +43,15 @@ prompt:;
     if (input == stdin) {
 
     }
+   size_t line_len = getline(&line, &n, input); 
+    pid_t spawnPid = fork();
+    switch(spawnPid){
+    case -1:
+      perror("fork() failed!");
+      exit(1);
+      break;
 
-    ssize_t line_len = getline(&line, &n, input);
+    case 0:
     if (line_len < 0) err(1, "%s", input_fn);
 
     size_t nwords = wordsplit(line);
@@ -54,7 +65,15 @@ prompt:;
 
       fprintf(stderr, "Expanded Word %zu: %s\n", i, words[i]);
     }
+    break;
+
+    default:
+      wait(&childStatus);
+      break;
+    }
+    return 0;
   }
+  goto prompt;
 }
 
 char *words[MAX_WORDS] = {0};
