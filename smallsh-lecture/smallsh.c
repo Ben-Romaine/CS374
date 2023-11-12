@@ -44,8 +44,8 @@ prompt:;
 
     }
    size_t line_len = getline(&line, &n, input);
-   char* _echoVar = "_echo";
-   setenv(_echoVar, "_echo", 1);
+   char* _echo = "_echoVar";
+   setenv(_echo, "_echo", 1);
     pid_t spawnPid = fork();
     switch(spawnPid){
     case -1:
@@ -67,15 +67,17 @@ prompt:;
 
       fprintf(stderr, "Expanded Word %zu: %s\n", i, words[i]);
     }
-      fprintf(stderr, "Child process %d done. Exit status %d.\n", getpid(), childStatus);
+      fprintf(stdout, "Child process %d done. Exit status %d.\n", getpid(), childStatus);
     break;
 
     default:
       wait(&childStatus);
+      fprintf(stderr, "Child process %d done. Exit status %d.\n", getpid(), childStatus);
+      unsetenv(_echo);
       break;
     }
     return 0;
-    unsetenv(_echoVar);
+    
   }
   goto prompt;
 }
