@@ -31,22 +31,27 @@ int main(int argc, char *argv[])
   char *line = NULL;
   size_t n = 0;
   for (;;) {
-//prompt:;
+prompt:;
     /* TODO: Manage background processes */
+
 
     /* TODO: prompt */
     if (input == stdin) {
 
     }
+
     ssize_t line_len = getline(&line, &n, input);
     if (line_len < 0) err(1, "%s", input_fn);
-    
+
     size_t nwords = wordsplit(line);
+
     for (size_t i = 0; i < nwords; ++i) {
       fprintf(stderr, "Word %zu: %s\n", i, words[i]);
+
       char *exp_word = expand(words[i]);
       free(words[i]);
       words[i] = exp_word;
+
       fprintf(stderr, "Expanded Word %zu: %s\n", i, words[i]);
     }
   }
