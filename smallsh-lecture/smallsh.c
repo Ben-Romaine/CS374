@@ -44,8 +44,8 @@ prompt:;
 
     }
    size_t line_len = getline(&line, &n, input);
-   char* _echo = "echo";
-   setenv(_echo, "echo", 1);
+   char* echo = "_echo";
+   setenv(echo, "echo", 1);
     pid_t spawnPid = fork();
     switch(spawnPid){
     case -1:
@@ -67,7 +67,7 @@ prompt:;
 
       fprintf(stdout, "Expanded Word %zu: %s\n", i, words[i]);
     }
-    unsetenv(_echo);
+    unsetenv(echo);
     break;
 
     default:
