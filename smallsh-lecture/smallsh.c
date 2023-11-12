@@ -67,13 +67,11 @@ prompt:;
 
       fprintf(stderr, "Expanded Word %zu: %s\n", i, words[i]);
     }
-      fprintf(stdout, "Child process %d done. Exit status %d.\n", getpid(), childStatus);
     break;
 
     default:
       wait(&childStatus);
       fprintf(stderr, "Child process %d done. Exit status %d.\n", getpid(), childStatus);
-      unsetenv(_echo);
       break;
     }
     return 0;
